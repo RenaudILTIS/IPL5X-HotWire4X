@@ -31,7 +31,7 @@
 ; device id and version
 #define		ID_VENDOR			0x04D8	; idVendor (2 bytes: 0x04D8 is Microchip)
 #define		ID_PRODUCT			0x00AA	; idProduct (2 bytes)
-#define		BCD_DEVICE			0x0033	; bcdDevice (2 bytes: 0xJJMN: JJ.M.N: JJ major version number, M minor, N sub-minor: 0x0334 = 3.3.4)
+#define		BCD_DEVICE			0x0034	; bcdDevice (2 bytes: 0xJJMN: JJ.M.N: JJ major version number, M minor, N sub-minor: 0x0334 = 3.3.4)
 
 
 ; bRequest defines for vendor specific requests

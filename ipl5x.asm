@@ -15,6 +15,16 @@
 ; 
 ; ============================================================================
 ;
+; Modifications:
+; 
+; v0.34 (2026): the STOP/PROG button also cuts the heat (PWM) when the
+;   machine is idle (two instructions in Read_PWM; version 0x0034 in
+;   usb_defs.inc). Built by Pascal Langer at the request of Renaud Iltis
+;   for HotWire4X. These sources were reconstructed by Renaud Iltis from v0.33:
+;   every byte of the v0.34 program memory is accounted for (see README.md).
+; 
+; ============================================================================
+;
 ; Software Licence Agreement:
 ; 
 ; This program is free software: you can redistribute it and/or modify
@@ -2281,6 +2291,12 @@ Read_PWM_Filter
 	btfsc	E_PC_MANU
 	movf	PWM_PIC, W, ACCESS			; E_PC_MANU = 1 => PWM_PIC
 	movwf	PWM_CUR, ACCESS
+
+	; v0.34: the STOP/PROG button also cuts the heat (PWM) when the machine is idle.
+	; In v0.33 the ISR cleared FLAG_PWM_ISR on STOP, but the block below set it again
+	; at once when no motion was running.
+	btfss	E_PROG						; E_PROG = 0: STOP/PROG button pressed
+	bcf		FLAG_PWM_ISR				; -> PWM OFF
 
 	; Start in PWM ON position protection
 	btfsc	PWM_ONOFF					; PWM_ONOFF 1=OFF 0=ON
